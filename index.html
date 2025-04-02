@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thasanamnoodles FC</title>
+    <!-- เพิ่ม favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- เรียกใช้ styles.css -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div id="background-shapes"></div>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Thasanamnoodles FC</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showAllNews()">Home</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            Categories
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#" onclick="filterCategory('Game')">Game</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterCategory('Movie')">Movie</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterCategory('Music')">Music</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="filterCategory('Technology')">Technology</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showAboutUs()">About Us</a>
+                    </li>
+                </ul>
+                <form class="d-flex search-container" id="searchForm">
+                    <input class="form-control me-2 search-input" type="search" placeholder="Search news..."
+                        id="searchInput">
+                    <button class="btn search-btn" type="button" onclick="toggleSearch()">Search</button>
+                </form>
+                <ul class="navbar-nav">
+                    <li class="nav-item" id="loginNavItem">
+                        <a class="nav-link" href="#" id="loginLink" data-bs-toggle="modal"
+                            data-bs-target="#loginModal">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div id="alertContainer"></div>
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" required>
+                            </div>
+                            <div id="loginError" class="text-danger mb-3" style="display: none;">Invalid username or
+                                password</div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-login" onclick="handleLogin()">Login</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        ต้องการจะออกใช่ไหม?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ไม่ใช่</button>
+                        <button type="button" class="btn btn-login" onclick="confirmLogout()">ใช่</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <h3 id="welcomeMessage"></h3>
+        </div>
+        <h2 id="categoryTitle" class="mb-4">All News</h2>
+        <div class="row" id="newsContainer">
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>About Us</h5>
+                    <p>เว็บไซต์นี้เป็นเว็บไซต์ที่รวมเนื้อหาหรือบริการหลากหลายรูปแบบ เช่น บทความ วิดีโอ เกม
+                        หรือบริการต่างๆ โดยมีระบบแนะนำที่ปรับตามความสนใจของผู้ใช้</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="footer-links list-unstyled">
+                        <li><a href="#" onclick="filterCategory('Game')">Game</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filterCategory('Movie')">Movie</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filterCategory('Music')">Music</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="filterCategory('Technology')">Technology</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Contact</h5>
+                    <p>Email: <a href="mailto:info@newsportal.com">thasanamnoodlesfc@gmail.com</a></p>
+                    <p>© 2025 Thasanamnoodles FC. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- เรียกใช้ Bootstrap และ script.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
